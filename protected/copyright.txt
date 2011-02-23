@@ -1,0 +1,5 @@
+$curYear = date('Y');
+echo <<<HTML
+Copyright &copy; $curYear PaperJoys.COM. Technical support: Lenin.<br/>
+All Rights Reserved.<br/>
+HTML;

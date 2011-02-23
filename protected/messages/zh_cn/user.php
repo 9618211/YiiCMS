@@ -1,0 +1,21 @@
+<?php
+return array(
+    'ID'=>'标识',
+    'Name'=>'用户名',
+    'Nickname'=>'昵称',
+    'Password'=>'密码',
+    'Email'=>'电子邮箱',
+    'URL'=>'网址',
+    'Last Login Time'=>'最近登录时间',
+    'Creator'=>'创建人',
+    'Create Time'=>'创建时间',
+    'Modifier'=>'修改人',
+    'Update Time'=>'修改时间',
+    'Create User'=>'创建用户',
+    'Update User'=>'修改用户',
+    'Manage Users'=>'管理用户',
+    'Delete User'=>'删除用户',
+    'User List'=>'用户列表',
+    'View User'=>'查看用户',
+    'Password Repeat'=>'再次输入密码',
+);
