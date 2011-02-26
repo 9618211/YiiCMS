@@ -197,7 +197,7 @@ class PostController extends Controller
 	public function loadModel($id)
 	{
         $model=Post::model()->find(array(
-            'condition'=>'t.id='.$id.' and t.type='.POST_TYPE.' and (t.status='.PUBLIC_POST.' or t.create_user_id='.Yii::app()->user->id.')',
+            'condition'=>'t.id='.$id.' and t.type='.POST_TYPE.' and (t.status='.PUBLIC_POST.' or t.create_user_id='.Yii::app()->user->id.' or 1='.Yii::app()->user->id.')',
         ));
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
