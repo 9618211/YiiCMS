@@ -45,6 +45,14 @@ $('.search-form form').submit(function(){
 		*/
 		array(
 			'class'=>'CButtonColumn',
+            'buttons'=>array(
+                'view'=>array(
+                    'url'=>'Yii::app()->createUrl("blog/page/view", array("id"=>$data->id))',
+                    'options'=>array(
+                        'target'=>'_blank',
+                    ),
+                ),
+            ),
 		),
 	),
 )); ?>

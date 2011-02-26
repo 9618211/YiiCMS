@@ -52,7 +52,7 @@ $('.search-form form').submit(function(){
 			'class'=>'CButtonColumn',
             'buttons'=>array(
                 'view'=>array(
-                    'url'=>'Yii::app()->createUrl("blog/post/view", array("id"=>1))',
+                    'url'=>'Yii::app()->createUrl("blog/post/view", array("id"=>$data->id))',
                     'options'=>array(
                         'target'=>'_blank',
                     ),
