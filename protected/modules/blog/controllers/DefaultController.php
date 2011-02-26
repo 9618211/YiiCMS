@@ -18,6 +18,7 @@ class DefaultController extends Controller
         $statusCond = 't.status='.PUBLIC_POST;
         if (!Yii::app()->user->isGuest) {
             $statusCond .= ' or (t.status='.PRIVATE_POST.' and t.create_user_id='.Yii::app()->user->id.')';
+            $statusCond .= ' or (t.status='.PRIVATE_POST.' and 1='.Yii::app()->user->id.')';
         }
 
         $dataProvider=new CActiveDataProvider('Post', array(
@@ -56,6 +57,14 @@ class DefaultController extends Controller
         foreach (preg_split('/[\s,]+/', $queryStr) as $keyword) {
             $conds[] = "t.content like '%$keyword%'";
         }
+
+        $statusCond = "t.status=".PUBLIC_POST;
+        if (!Yii::app()->user->isGuest) {
+            $statusCond .= " or (t.status=".PRIVATE_POST." and t.create_user_id=".Yii::app()->user->id.")";
+            $statusCond .= " or (t.status=".PRIVATE_POST." and 1=".Yii::app()->user->id.")";
+            $statusCond = "($statusCond)";
+        }
+        $conds[] = $statusCond;
 
         $dataProvider=new CActiveDataProvider('Post', array(
             'criteria'=>array(

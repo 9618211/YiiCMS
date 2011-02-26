@@ -64,6 +64,7 @@ class PageController extends Controller
         $statusCond = 't.status='.PUBLIC_POST;
         if (!Yii::app()->user->isGuest) {
             $statusCond .= ' or t.create_user_id='.Yii::app()->user->id;
+            $statusCond .= ' or 1='.Yii::app()->user->id;
         }
 
         $model=Page::model()->find(array(

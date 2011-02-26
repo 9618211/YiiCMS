@@ -61,17 +61,6 @@ class PostController extends Controller
 		));
 	}
 
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Post');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
     public function actionFeed()
     {
         if (isset($_GET['tag'])) {
@@ -113,6 +102,7 @@ class PostController extends Controller
         $statusCond = 't.status='.PUBLIC_POST;
         if (!Yii::app()->user->isGuest) {
             $statusCond .= ' or t.create_user_id='.Yii::app()->user->id;
+            $statusCond .= ' or 1='.Yii::app()->user->id;
         }
 
         $model=Post::model()->find(array(
