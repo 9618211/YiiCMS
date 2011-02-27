@@ -18,8 +18,6 @@ class Post extends ArtActiveRecord
     public $max_create_time;
     public $min_update_time;
     public $max_update_time;
-    public $set_private;
-    public $published;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -48,7 +46,7 @@ class Post extends ArtActiveRecord
 		return array(
 			array('title', 'required'),
 			array('title, taglist', 'length', 'max'=>256),
-			array('content, taglist, enable_comment, set_private, published', 'safe'),
+			array('content, taglist, enable_comment, status', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			array('title, content, create_user_id', 'safe', 'on'=>'search'),
@@ -181,14 +179,6 @@ class Post extends ArtActiveRecord
     protected function beforeValidate()
     {
         $this->type = POST_TYPE;
-
-        if ($this->set_private == 1) {
-            $this->status = PRIVATE_POST;
-        } else if ($this->published == 1) {
-            $this->status = PUBLIC_POST;
-        } else {
-            $this->status = DRAFT_POST;
-        }
 
         return parent::beforeValidate();
     }

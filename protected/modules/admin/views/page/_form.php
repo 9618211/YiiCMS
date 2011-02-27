@@ -3,16 +3,14 @@
 <?php
 Yii::app()->clientScript->registerScript('buttons', "
 $('#btn-draft').click(function(){
-    $('#Page_set_private').attr('checked', false);
-    $('#Page_published').attr('checked', false);
-
+    $(\"#Page_status_2\").attr('checked', true);
     $('#page-form').submit();
 });
 $('#btn-postit').click(function(){
-    var setPrivate = ".($model->status==DRAFT_POST ? 'true':'false').";
-    if(!setPrivate || !$('#Page_set_private').attr('checked')) setPrivate = false;
-    $('#Page_set_private').attr('checked',  setPrivate);
-    $('#Page_published').attr('checked', true);
+    var status = $(\"input[name='Page[status]']:checked\").val();
+    if(status == ".DRAFT_POST."){
+        $(\"#Page_status_0\").attr('checked', true);
+    }
 
     $('#page-form').submit();
 });
@@ -48,23 +46,17 @@ $('#btn-postit').click(function(){
 		<?php echo $form->error($model,'taglist'); ?>
 	</div>
 
+    <div class="row radio-group">
+		<?php echo $form->labelEx($model,'status'); ?>
+        <?php echo $form->radioButtonList($model, 'status', array(PUBLIC_POST=>Yii::t('post','Public'),PRIVATE_POST=>Yii::t('post','Private'),DRAFT_POST=>Yii::t('post','Draft')), array('separator'=>'&nbsp;')); ?>
+        <?php echo $form->error($model, 'status'); ?>
+    </div>
+
     <div class="row">
         <span class="option">
         <?php echo Yii::t('post', 'Enable Comment'); ?>
         <?php echo $form->checkBox($model, 'enable_comment'); ?>
         <?php echo $form->error($model, 'enable_comment'); ?>
-        </span>
-
-        <span class="option">
-        <?php echo Yii::t('post', 'Published'); ?>
-        <?php echo CHtml::checkBox('Page[published]', $model->status!=DRAFT_POST); ?>
-        <?php echo $form->error($model, 'status'); ?>
-        </span>
-
-        <span class="option">
-        <?php echo Yii::t('post', 'Set Private'); ?>
-        <?php echo CHtml::checkBox('Page[set_private]', $model->status==PRIVATE_POST); ?>
-        <?php echo $form->error($model, 'status'); ?>
         </span>
     </div>
 

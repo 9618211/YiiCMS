@@ -373,3 +373,10 @@ table.logo {margin-bottom: 0;}
 #search-box {border: 1px solid #D1D8E8;padding: 2px;margin: 0px;}
 div.form .form-title {border-bottom: 1px solid #D1D8E8;}
 div.form .option {margin-right:10px;font-weight:bold;}
+
+.radio-group label,
+.radio-group input
+{
+    display:inline !important;
+    width:auto !important;
+}

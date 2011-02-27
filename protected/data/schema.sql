@@ -23,7 +23,7 @@ create table if not exists art_post (
     title nvarchar(256) not null,
     content text,
     type integer not null,
-    status tinyint not null,
+    status tinyint not null default 1,
     enable_comment bool not null default 1,
     create_user_id integer,
     create_time datetime,
