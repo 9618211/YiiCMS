@@ -1,3 +1,6 @@
+<?php
+$this->pageTitle = Yii::app()->name.' - '.CHtml::encode($model->title);
+?>
 <h1><?php echo CHtml::encode($model->title); ?></h1>
 
 <div class="single-post-auth">

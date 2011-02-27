@@ -56,7 +56,7 @@ class PageController extends Controller
             try {
                 // Save page.
                 if(!$model->save())
-                    throw new Exception('Failed saving page.');
+                    throw new Exception(Yii::t('page', 'Failed to save this page.'));
 
                 // Save tags.
                 foreach ($model->tags as $tag) {
@@ -65,7 +65,7 @@ class PageController extends Controller
                         $errors = array_reverse($errors, true);
                         $error = array_pop($errors);
                         $model->addError('taglist', "($tag->name)".$error[0]);
-                        throw new Exception('Failed saving tags.');
+                        throw new Exception(Yii::t('post', 'Failed to save tags.'));
                     }
                     // save relation
                     $sql = 'insert into rel_post_tag (post_id,tag_id) values (:postId, :tagId)';
@@ -73,13 +73,13 @@ class PageController extends Controller
                     $cmd->bindValue(':postId', $model->id);
                     $cmd->bindValue(':tagId', $tag->id);
                     if (!$cmd->execute()){
-                        $model->addError('taglist', "Failed saving relationship between this page and tag ($tagName).");
-                        throw new Exception('Failed saving relation.');
+                        $model->addError('taglist', sprintf(Yii::t('page', "Failed to save the relationship between this page and tag (%s)."), $tagName));
+                        throw new Exception(Yii::t('post', 'Failed to save the relation to tags.'));
                     }
                 }
 
                 $transaction->commit();
-                Yii::app()->user->setFlash('success', 'Page has been saved.');
+                Yii::app()->user->setFlash('success', Yii::t('page', 'Page has been saved.'));
 				$this->redirect(array('update','id'=>$model->id));
             } catch ( Exception $e ) {
                 $transaction->rollback();
@@ -111,7 +111,7 @@ class PageController extends Controller
             try {
                 // Save page.
                 if(!$model->save())
-                    throw new Exception('Failed saving page.');
+                    throw new Exception(Yii::t('page', 'Failed to save this page.'));
 
                 // Save tags.
                 foreach ($model->tags as $tag) {
@@ -120,7 +120,7 @@ class PageController extends Controller
                         $errors = array_reverse($errors, true);
                         $error = array_pop($errors);
                         $model->addError('taglist', "($tagName)".$error[0]);
-                        throw new Exception('Failed saving tags.');
+                        throw new Exception(Yii::t('post', 'Failed to save tags.'));
                     }
                     // Drop relation if exists.
                     $sql = 'delete from rel_post_tag where post_id=:postId and tag_id=:tagId';
@@ -134,13 +134,13 @@ class PageController extends Controller
                     $cmd->bindValue(':postId', $model->id);
                     $cmd->bindValue(':tagId', $tag->id);
                     if (!$cmd->execute()){
-                        $model->addError('taglist', "Failed saving relationship between this page and tag ($tagName).");
-                        throw new Exception('Failed saving relation.');
+                        $model->addError('taglist', sprintf(Yii::t('page', "Failed to save the relationship between this page and tag (%s)."), $tagName));
+                        throw new Exception(Yii::t('post', 'Failed to save the relation to tags.'));
                     }
                 }
 
                 $transaction->commit();
-                Yii::app()->user->setFlash('success', 'Page has been updated.');
+                Yii::app()->user->setFlash('success', Yii::t('page', 'Page has been updated.'));
 				$this->redirect(array('update','id'=>$model->id));
             } catch ( Exception $e ) {
                 $transaction->rollback();

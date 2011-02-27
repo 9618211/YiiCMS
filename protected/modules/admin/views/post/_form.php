@@ -14,6 +14,9 @@ $('#btn-postit').click(function(){
 
     $('#post-form').submit();
 });
+$('#btn-preview').click(function(){
+    window.open('".Yii::app()->createUrl('blog/post/view', array('id'=>$model->id))."');
+});
 ");
 ?>
 
@@ -54,7 +57,7 @@ $('#btn-postit').click(function(){
 
     <div class="row">
         <span class="option">
-        <?php echo Yii::t('post', 'Enable Comment'); ?>
+		<?php echo $form->labelEx($model,'enable_comment'); ?>
         <?php echo $form->checkBox($model, 'enable_comment'); ?>
         <?php echo $form->error($model, 'enable_comment'); ?>
         </span>
@@ -77,6 +80,14 @@ $('#btn-postit').click(function(){
         <span class="option">
         <?php echo CHtml::button(Yii::t('post', 'Save as draft'), array(
             'id'=>'btn-draft',
+        )); ?>
+        </span>
+        <?php endif; ?>
+
+        <?php if(!$model->isNewRecord): ?>
+        <span class="option">
+        <?php echo CHtml::button(Yii::t('post', $model->status == DRAFT_POST ? 'Preview' : 'View Post'), array(
+            'id'=>'btn-preview',
         )); ?>
         </span>
         <?php endif; ?>

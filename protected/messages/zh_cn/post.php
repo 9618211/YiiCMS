@@ -27,4 +27,11 @@ return array(
     'Post it'=>'发表',
     'Save changes'=>'更新',
     'Save as draft'=>'保存为草稿',
+    'Preview'=>'预览',
+    'Failed to save this post.'=>'文章保存失败，请根据错误提示检查输入的内容！',
+    'Failed to save tags.'=>'标签保存失败，请根据错误提示检查输入的内容！',
+    'Failed to save the relationship between this post and tag (%s).'=>'保存文章和标签（%s）的关联失败',
+    'Failed to save the relation to tags.'=>'保存与标签的关联失败，请根据错误提示检查输入的内容！',
+    'Post has been saved.'=>'文章保存成功！',
+    'Post has been updated.'=>'文章更新成功！',
 );

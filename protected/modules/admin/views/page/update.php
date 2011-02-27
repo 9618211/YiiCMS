@@ -8,4 +8,10 @@ $this->menu=array(
 );
 ?>
 
+<?php if(Yii::app()->user->hasFlash('success')): ?>
+<div class="flash-success">
+    <?php echo Yii::app()->user->getFlash('success'); ?>
+</div>
+<?php endif; ?>
+
 <?php echo $this->renderPartial('_form', array('model'=>$model)); ?>

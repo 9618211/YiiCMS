@@ -1,3 +1,7 @@
+<?php
+$this->pageTitle = Yii::app()->name.' - '.CHtml::encode($model->title);
+?>
+
 <div class="single-post-content">
     <?php echo $model->content; ?>
 </div>

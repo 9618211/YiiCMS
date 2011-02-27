@@ -374,6 +374,8 @@ table.logo {margin-bottom: 0;}
 div.form .form-title {border-bottom: 1px solid #D1D8E8;}
 div.form .option {margin-right:10px;font-weight:bold;}
 
+div.form .option label,
+div.form .option label,
 .radio-group label,
 .radio-group input
 {
