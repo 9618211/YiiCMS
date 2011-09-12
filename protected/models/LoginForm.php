@@ -1,5 +1,4 @@
 <?php
-
 /**
  * LoginForm class.
  * LoginForm is the data structure for keeping
@@ -10,6 +9,7 @@ class LoginForm extends CFormModel
 	public $username;
 	public $password;
 	public $rememberMe;
+    public $verifyCode;
 
 	private $_identity;
 
@@ -27,6 +27,8 @@ class LoginForm extends CFormModel
 			array('rememberMe', 'boolean'),
 			// password needs to be authenticated
 			array('password', 'authenticate'),
+            // captcha
+            array('verifyCode', 'captcha', 'allowEmpty'=>!extension_loaded('gd')),
 		);
 	}
 
@@ -39,6 +41,7 @@ class LoginForm extends CFormModel
 			'rememberMe'=>Yii::t('loginform', 'Remember me next time'),
             'username'=>Yii::t('loginform', 'Username'),
             'password'=>Yii::t('loginform', 'Password'),
+            'verifyCode'=>Yii::t('loginform', 'Verify Code'),
 		);
 	}
 
@@ -52,7 +55,7 @@ class LoginForm extends CFormModel
 		{
 			$this->_identity=new UserIdentity($this->username,$this->password);
 			if(!$this->_identity->authenticate())
-				$this->addError('password','Incorrect username or password.');
+				$this->addError('password',Yii::t('user', 'Incorrect username or password.'));
 		}
 	}
 

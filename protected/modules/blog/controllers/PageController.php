@@ -9,6 +9,20 @@ class PageController extends Controller
 	public $layout='column2';
 
 	/**
+	 * Declares class-based actions.
+	 */
+	public function actions()
+	{
+		return array(
+			// captcha action renders the CAPTCHA image displayed on the contact page
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+				'backColor'=>0xFFFFFF,
+			),
+		);
+	}
+
+	/**
 	 * @return array action filters
 	 */
 	public function filters()
@@ -27,7 +41,7 @@ class PageController extends Controller
 	{
 		return array(
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('view'),
+				'actions'=>array('view','captcha'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users

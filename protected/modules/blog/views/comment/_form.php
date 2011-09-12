@@ -52,6 +52,29 @@
         </script>
 	</div>
 
+    <?php if(extension_loaded('gd') && !Yii::app()->user->checkAccess('createComment')): ?>
+	<div class="row">
+        <?php echo $form->labelEx($model,'verifyCode'); ?>
+        <div style="display:table;">
+            <div style="display:table-cell;vertical-align:middle;">
+                <?php echo $form->textField($model,'verifyCode'); ?>
+                <?php echo $form->error($model,'verifyCode'); ?>
+            </div>
+            <div style="display:table-cell;">
+                <?php $this->widget('CCaptcha', array(
+                    'showRefreshButton'=>false,
+                    'clickableImage'=>true,
+                    'imageOptions'=>array(
+                        'title'=>Yii::t('loginform', 'Click to get a new captcha.'),
+                        'alt'=>Yii::t('loginform', 'Click to get a new captcha.'),
+                        'style'=>'cursor:pointer',
+                    ),
+                )); ?>
+            </div>
+        </div>
+	</div>
+    <?php endif; ?>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('admin', 'Create') : Yii::t('admin', 'Save')); ?>
 	</div>

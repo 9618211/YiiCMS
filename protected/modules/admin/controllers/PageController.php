@@ -10,39 +10,13 @@ class PageController extends Controller
     public $defaultAction='admin';
 
 	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-		);
-	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','index','view','admin','delete'),
-				'users'=>array('@'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
-
-	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
 	public function actionCreate()
 	{
+        $this->checkAccess('createPage');
+
 		$model=new Page;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -98,6 +72,8 @@ class PageController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        $this->checkAccess('updatePage');
+
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -159,10 +135,22 @@ class PageController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+        // we only allow deletion via POST request
 		if(Yii::app()->request->isPostRequest)
 		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+			$model = $this->loadModel($id);
+
+            try {
+                $this->checkAccess('deletePage');
+            } catch ( Exception $e ) {
+                if(!isset($_GET['ajax']))
+                    throw $e;
+                else
+                    echo $e->getMessage();
+                return;
+            }
+
+            $model->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -177,6 +165,8 @@ class PageController extends Controller
 	 */
 	public function actionAdmin()
 	{
+        $this->checkAccess('administrator');
+
 		$model=new Page('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Page']))

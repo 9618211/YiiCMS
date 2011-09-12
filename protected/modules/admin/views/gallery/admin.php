@@ -16,6 +16,18 @@ $this->widget('zii.widgets.grid.CGridView', array(
     )),
     'columns'=>array(
         array(
+            'class'=>'CButtonColumn',
+            'afterDelete'=>'function(link,success,data){ if(success && typeof data=="string" && data.length>0) alert(data); }',
+            'template'=>'{delete}',
+            'buttons'=>array(
+                'delete'=>array(
+                    'url'=>'Yii::app()->createUrl("admin/gallery/delete", array(
+                        "name"=>$data["filename"],
+                    ))',
+                ),
+            ),
+        ),
+        array(
             'name'=>Yii::t('gallery', 'thumbnail'),
             'type'=>'raw',
             'value'=>'CHtml::image($data["url"], "", array(
@@ -26,18 +38,17 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name'=>Yii::t('gallery', 'name'),
             'value'=>'$data["name"]',
         ),
-        array(
-            'class'=>'CButtonColumn',
-            'template'=>'{delete}',
-            'buttons'=>array(
-                'delete'=>array(
-                    'url'=>'Yii::app()->createUrl("admin/gallery/delete", array(
-                        "name"=>$data["filename"],
-                    ))',
-                ),
-            ),
-        ),
     ),
+    'template'=>'
+        <table>
+            <tr>
+                <td class="cgridview-items-td" colspan="2">{items}</td>
+            </tr>
+            <tr>
+                <td class="cgridview-pager-td">{pager}</td>
+                <td class="cgridview-summary-td">{summary}</td>
+            </tr>
+        </table>',
     'emptyText'=>Yii::t('gallery', 'No images yet.'),
 ));
 ?>

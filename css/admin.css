@@ -9,8 +9,7 @@ body
 
 #page
 {
-	margin-top: 5px;
-	margin-bottom: 5px;
+	margin: 5px;
 	background: white;
 	border: 1px solid #C9E0ED;
 }
@@ -24,12 +23,12 @@ body
 
 #content
 {
-    padding: 20px;
+    padding: 10px 10px;
 }
 
 #sidebar
 {
-	padding: 20px 20px 20px 0;
+	padding: 10px 10px;
 }
 
 #footer
@@ -121,6 +120,11 @@ div.flash-notice a
 div.flash-success a
 {
 	color:#264409;
+}
+
+div.form .rememberMe label
+{
+	display: inline;
 }
 
 div.view
@@ -345,6 +349,20 @@ div.search-form
     text-align: center;
 }
 
+.login
+{
+    text-align: center;
+}
+
+.login-table
+{
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-table tbody tr:nth-child(even) td, tbody tr.even td {background:#ffffff;}
+.login-table tbody td {padding:0 !important;}
 .post-title {width: 100%;}
 .post-content {width: 100%;}
 .page-title {width: 100%;}
@@ -364,3 +382,37 @@ div.form .option label,
     display:inline !important;
     width:auto !important;
 }
+
+.xview
+{
+    display: block;
+}
+.xview::after
+{
+    content: " 0020";
+    display: block;
+    clear:   both;
+    hight:   0;
+    visibility: hidden;
+    overflow:   hidden;
+}
+.xview-td
+{
+    vertical-align: top;
+    padding: 0px;
+	border-right: 1px solid #C9E0ED;
+}
+.xview-sidebar
+{
+    width: 200px;
+}
+.cgridview-items-td,
+.cgridview-summary-td,
+.cgridview-pager-td
+{
+    padding: 0px;
+    background-color: #FFF !important;
+}
+.grid-view {padding:0px !important;}
+.grid-view .pager {text-align: left !important;}
+.filters td {background-color: #FFF !important;}

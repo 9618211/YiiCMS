@@ -21,6 +21,7 @@ class Comment extends ArtActiveRecord
     public $max_create_time;
     public $min_update_time;
     public $max_update_time;
+    public $verifyCode;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -57,6 +58,7 @@ class Comment extends ArtActiveRecord
 			// Please remove those attributes that should not be searched.
 			array('post_id, content, author, email, url', 'safe', 'on'=>'search'),
 			array('min_create_time,max_create_time,min_update_time,max_update_time', 'safe', 'on'=>'search'),
+            array('verifyCode', 'captcha', 'allowEmpty'=>!Yii::app()->user->isGuest),
 		);
 	}
 
@@ -89,6 +91,7 @@ class Comment extends ArtActiveRecord
 			'create_user_id' => Yii::t('comment', 'Author'),
 			'update_time' => Yii::t('comment', 'Update Time'),
 			'update_user_id' => Yii::t('comment', 'Modifier'),
+			'verifyCode' => Yii::t('comment', 'Verify Code'),
 		);
 	}
 

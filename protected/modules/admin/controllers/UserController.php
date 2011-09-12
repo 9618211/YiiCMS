@@ -11,39 +11,12 @@ class UserController extends Controller
 	public $layout='column2';
 
 	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-		);
-	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('index','view','update','create','delete','admin'),
-				'users'=>array('@'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
-
-	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
+        $this->checkAccess('readUser');
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -55,6 +28,8 @@ class UserController extends Controller
 	 */
 	public function actionCreate()
 	{
+        $this->checkAccess('createUser');
+
 		$model=new User;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -76,10 +51,16 @@ class UserController extends Controller
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
+     * @param string  $scene the scenario.
 	 */
-	public function actionUpdate($id)
+	public function actionUpdate($id, $scene=null)
 	{
 		$model=$this->loadModel($id);
+        if ($scene !== null) {
+            $model->setScenario($scene);
+        }
+
+        $this->checkAccess('updateUser', array('user'=>$model));
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -103,15 +84,26 @@ class UserController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-        // The user admin should not be deleted.
-        if ((int)$id === 1) {
-            throw new CHttpException(403, Yii::t('admin', 'User admin is not allowed to be deleted.'));
-        }
-
+        // we only allow deletion via POST request
 		if(Yii::app()->request->isPostRequest)
 		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+            $model = $this->loadModel($id);
+
+            try {
+                $this->checkAccess('deleteUser');
+                // The user admin should not be deleted.
+                if ((int)$id === 1) {
+                    throw new CHttpException(403, Yii::t('admin', 'User admin is not allowed to be deleted.'));
+                }
+            } catch ( Exception $e ) {
+                if(!isset($_GET['ajax']))
+                    throw $e;
+                else
+                    echo $e->getMessage();
+                return;
+            }
+
+            $model->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -126,6 +118,8 @@ class UserController extends Controller
 	 */
 	public function actionAdmin()
 	{
+        $this->checkAccess('readUser');
+
 		$model=new User('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['User']))
@@ -161,4 +155,16 @@ class UserController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+    /**
+     * Get role data for the dropdown list
+     **/
+    protected function getRoleData()
+    {
+        $data = array(''=>'');
+        foreach (Yii::app()->authManager->getRoles() as $roleName=>$roleObj) {
+            $data[$roleName] = Yii::t('user', $roleName);
+        }
+        return $data;
+    }
 }

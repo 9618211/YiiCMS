@@ -20,6 +20,12 @@ class DefaultController extends Controller
     {
         $stat = array();
 
+        $stat['selfPostNum'] = Post::model()->count(array(
+            'condition'=>'t.type='.POST_TYPE.' and t.create_user_id='.Yii::app()->user->id,
+        ));
+        $stat['selfCommentNum'] = Comment::model()->count(array(
+            'condition'=>'t.create_user_id='.Yii::app()->user->id,
+        ));
         $stat['postNum'] = Post::model()->count(array(
             'condition'=>'t.type='.POST_TYPE,
         ));

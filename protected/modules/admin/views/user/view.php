@@ -2,10 +2,16 @@
 $this->pageTitle = Yii::app()->name.' - '.Yii::t('admin', 'View User');
 
 $this->menu=array(
-	array('label'=>Yii::t('user', 'Create User'), 'url'=>array('create')),
+	array('label'=>Yii::t('user', 'User List'), 'url'=>array('admin')),
 	array('label'=>Yii::t('user', 'Update User'), 'url'=>array('update', 'id'=>$model->id)),
-	array('label'=>Yii::t('user', 'Delete User'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>Yii::t('user', 'Manage Users'), 'url'=>array('admin')),
+	array('label'=>Yii::t('user', 'Change Password'), 'url'=>array('update', 'id'=>$model->id, 'scene'=>'password')),
+    array('label'=>Yii::t('user', 'Delete User'), 'url'=>'#', 
+        'linkOptions'=>array(
+            'submit'=>array('delete','id'=>$model->id),
+            'confirm'=>Yii::t('user', 'Are you sure you want to delete this user ?'),
+        )
+    ),
+	array('label'=>Yii::t('user', 'Create User'), 'url'=>array('create')),
 );
 ?>
 

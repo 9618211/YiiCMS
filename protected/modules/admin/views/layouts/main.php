@@ -11,7 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
 	<![endif]-->
 
-	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/admin.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/form.css" />
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -19,28 +19,33 @@
 
 <body>
 
-<div class="container" id="page">
+<div id="page">
 
 	<div id="header">
 		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
-		<?php $this->widget('zii.widgets.CMenu',array(
-			'items'=>array(
-				array('label'=>Yii::t('menu', 'Back to Site'), 'url'=>array('/blog')),
-				array('label'=>Yii::t('menu', 'Control Panel'), 'url'=>array('/admin')),
-				array('label'=>Yii::t('menu', 'Users'), 'url'=>array('/admin/user')),
-				array('label'=>Yii::t('menu', 'Posts'), 'url'=>array('/admin/post')),
-				array('label'=>Yii::t('menu', 'Pages'), 'url'=>array('/admin/page')),
-				array('label'=>Yii::t('menu', 'Comments'), 'url'=>array('/admin/comment')),
-				array('label'=>Yii::t('menu', 'Tags'), 'url'=>array('/admin/tag')),
-				array('label'=>Yii::t('menu', 'Gallery'), 'url'=>array('/admin/gallery')),
-				array('label'=>Yii::t('menu', 'Logs'), 'url'=>array('/admin/sitelog'), 'visible'=>(Yii::app()->user->name == 'admin')),
-				array('label'=>Yii::t('menu', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
-				array('label'=>Yii::t('menu', 'Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
-			),
-		)); ?>
+        <?php
+        // Get current controller
+        $cc = Yii::app()->getController();
+        $cid = is_object($cc) ? $cc->getId() : null;
+        $this->widget('zii.widgets.CMenu',array(
+            'items'=>array(
+                array('label'=>Yii::t('menu', 'Control Panel'), 'url'=>array('/admin'), 'active'=>$cid=='default', 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>Yii::t('menu', 'Users'), 'url'=>array('/admin/user'), 'active'=>$cid=='user', 'visible'=>Yii::app()->user->checkAccess('createUser')),
+                array('label'=>Yii::t('menu', 'Posts'), 'url'=>array('/admin/post'), 'active'=>$cid=='post', 'visible'=>Yii::app()->user->checkAccess('createPost')),
+                array('label'=>Yii::t('menu', 'Pages'), 'url'=>array('/admin/page'), 'active'=>$cid=='page', 'visible'=>Yii::app()->user->checkAccess('createPost')),
+                array('label'=>Yii::t('menu', 'Comments'), 'url'=>array('/admin/comment'), 'active'=>$cid=='comment', 'visible'=>Yii::app()->user->checkAccess('createComment')),
+                array('label'=>Yii::t('menu', 'Tags'), 'url'=>array('/admin/tag'), 'active'=>$cid=='tag', 'visible'=>Yii::app()->user->checkAccess('createTag')),
+                array('label'=>Yii::t('menu', 'Gallery'), 'url'=>array('/admin/gallery'), 'active'=>$cid=='gallery', 'visible'=>Yii::app()->user->checkAccess('createImage')),
+                array('label'=>Yii::t('menu', 'Logs'), 'url'=>array('/admin/sitelog'), 'active'=>$cid=='sitelog', 'visible'=>(Yii::app()->user->name == 'admin')),
+                array('label'=>Yii::t('menu', 'Back to Site'), 'url'=>array('/blog')),
+                //array('label'=>Yii::t('menu', 'Login'), 'url'=>array('/admin/login'), 'visible'=>Yii::app()->user->isGuest),
+                array('label'=>Yii::t('menu', 'Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/admin/login/logout'), 'visible'=>!Yii::app()->user->isGuest)
+            ),
+        ));
+        ?>
 	</div><!-- mainmenu -->
 
 	<?php echo $content; ?>

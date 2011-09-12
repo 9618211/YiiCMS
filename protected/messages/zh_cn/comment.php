@@ -16,4 +16,5 @@ return array(
     'Manage Comments'=>'管理评论',
     'Comment List'=>'评论列表',
     'No comments yet.'=>'还没有评论',
+    'Verify Code'=>'验证码',
 );

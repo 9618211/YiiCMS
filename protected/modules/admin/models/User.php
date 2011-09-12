@@ -7,6 +7,9 @@
  * @property integer $id
  * @property string $name
  * @property string $password
+ * @property string $old_password
+ * @property string $new_password
+ * @property string $new_password_repeat
  * @property string $nickname
  * @property string $email
  * @property string $last_login_time
@@ -17,7 +20,10 @@
  */
 class User extends ArtActiveRecord
 {
-    public $password_repeat;
+    public $role;
+    public $old_password;
+    public $new_password;
+    public $new_password_repeat;
     public $min_last_login_time;
     public $max_last_login_time;
     public $min_create_time;
@@ -50,17 +56,19 @@ class User extends ArtActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, password, nickname, email', 'required'),
-			array('name, password, nickname, email, url', 'length', 'max'=>256),
-            array('name, email', 'unique'),
-            array('password', 'compare'),
-            array('password_repeat', 'safe'),
+			array('name, nickname, email, role', 'required'),
+			array('old_password', 'required', 'on'=>'password'),
+            array('new_password, new_password_repeat', 'required', 'on'=>'insert, password'),
+			array('name, password, nickname, email, url, old_password, new_password, new_password_repeat', 'length', 'max'=>256),
             array('url', 'url'),
             array('email', 'email'),
+            array('name, email', 'unique'),
+            array('old_password', 'safe', 'on'=>'password'),
+            array('new_password, new_password_repeat', 'safe', 'on'=>'insert, password'),
+            array('new_password', 'compare', 'on'=>'insert, password'),
+            array('old_password', 'checkPassword', 'on'=>'password'),
 			// The following rule is used by search().
-			// Please remove those attributes that should not be searched.
-			array('name, password, nickname, email, url', 'safe', 'on'=>'search'),
-			array('create_user_id,update_user_id,min_last_login_time,max_last_login_time,min_create_time,max_create_time,min_update_time,max_update_time', 'safe', 'on'=>'search'),
+			array('name, nickname, email, url, create_user_id,update_user_id,min_last_login_time,max_last_login_time,min_create_time,max_create_time,min_update_time,max_update_time', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -94,7 +102,10 @@ class User extends ArtActiveRecord
 			'create_time' => Yii::t('user', 'Create Time'),
 			'update_user_id' => Yii::t('user', 'Modifier'),
 			'update_time' => Yii::t('user', 'Update Time'),
-            'password_repeat'=>Yii::t('user', 'Password Repeat'),
+            'old_password'=>Yii::t('user', 'Old Password'),
+            'new_password'=>Yii::t('user', 'New Password'),
+            'new_password_repeat'=>Yii::t('user', 'Password Repeat'),
+            'role'=>Yii::t('user', 'role'),
 		);
 	}
 
@@ -110,7 +121,6 @@ class User extends ArtActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('name',$this->name,true);
-		$criteria->compare('password',$this->password,true);
 		$criteria->compare('nickname',$this->nickname,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('url',$this->url,true);
@@ -155,17 +165,59 @@ class User extends ArtActiveRecord
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,
+            //'pagination'=>array('pageSize'=>1,),
 		));
 	}
 
+    /**
+     * Encrypt the new password
+     **/
     protected function afterValidate()
     {
         parent::afterValidate();
-        $this->password = $this->encrypt($this->password);
+        $this->password = $this->inScenarios('insert, password') ? $this->encrypt($this->new_password) : $this->password;
     }
 
+    /**
+     * Eagerly load roles
+     **/
+    protected function afterFind()
+    {
+        parent::afterFind();
+        $this->role = key(Yii::app()->authManager->getRoles($this->id));
+    }
+
+    /**
+     * Role assignment
+     **/
+    protected function afterSave()
+    {
+        parent::afterSave();
+        $oldRole = key(Yii::app()->authManager->getRoles($this->id));
+        if ($oldRole != $this->role) {
+            Yii::app()->authManager->revoke($oldRole, $this->id);
+            Yii::app()->authManager->assign($this->role, $this->id);
+        }
+    }
+
+    /**
+     * Return the md5 value of the given string
+     * @param string $text
+     **/
     public function encrypt($text)
     {
         return md5($text);
+    }
+
+    /**
+     * Validator method which check password while changing passwords.
+     * @param string $attr the old_password attribute
+     * @param array  $params the parameters for this validator.
+     **/
+    public function checkPassword($attr, $params)
+    {
+        if ($this->password !== md5($this->old_password)) {
+            $this->addError($attr, Yii::t('user', 'Incorrect password.'));
+        }
     }
 }

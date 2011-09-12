@@ -10,39 +10,13 @@ class TagController extends Controller
     public $defaultAction = 'admin';
 
 	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array(
-			'accessControl', // perform access control for CRUD operations
-		);
-	}
-
-	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
-	 */
-	public function accessRules()
-	{
-		return array(
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','admin','delete','index','view'),
-				'users'=>array('@'),
-			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
-			),
-		);
-	}
-
-	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
 	public function actionView($id)
 	{
+        $this->checkAccess('readTag');
+
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
 		));
@@ -54,6 +28,8 @@ class TagController extends Controller
 	 */
 	public function actionCreate()
 	{
+        $this->checkAccess('createTag');
+
 		$model=new Tag;
 
 		// Uncomment the following line if AJAX validation is needed
@@ -78,6 +54,8 @@ class TagController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        $this->checkAccess('updateTag');
+
 		$model=$this->loadModel($id);
 
 		// Uncomment the following line if AJAX validation is needed
@@ -102,10 +80,22 @@ class TagController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+        // we only allow deletion via POST request
 		if(Yii::app()->request->isPostRequest)
 		{
-			// we only allow deletion via POST request
-			$this->loadModel($id)->delete();
+            $model = $this->loadModel($id);
+
+            try {
+                $this->checkAccess('deleteTag');
+            } catch ( Exception $e ) {
+                if(!isset($_GET['ajax']))
+                    throw $e;
+                else
+                    echo $e->getMessage();
+                return;
+            }
+
+            $model->delete();
 
 			// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 			if(!isset($_GET['ajax']))
@@ -116,21 +106,12 @@ class TagController extends Controller
 	}
 
 	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Tag');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
+        $this->checkAccess('user');
+
 		$model=new Tag('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Tag']))

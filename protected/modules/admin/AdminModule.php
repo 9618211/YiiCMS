@@ -19,8 +19,8 @@ class AdminModule extends CWebModule
 	{
 		if(parent::beforeControllerAction($controller, $action))
 		{
-            if (Yii::app()->user->isGuest) {
-                Yii::app()->request->redirect('site/login');
+            if (Yii::app()->user->isGuest && !strstr(Yii::app()->request->requestUri, 'admin/login')) {
+                Yii::app()->request->redirect(Yii::app()->createURL('admin/login'));
             }
 			return true;
 		}

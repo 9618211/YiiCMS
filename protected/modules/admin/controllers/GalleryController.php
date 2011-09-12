@@ -7,6 +7,8 @@ class GalleryController extends Controller
 
     public function actionAdmin()
     {
+        $this->checkAccess('user');
+
         $images = $this->findImages();
 
         $this->render('admin', array(
@@ -16,6 +18,8 @@ class GalleryController extends Controller
 
     public function actionUpload()
     {
+        $this->checkAccess('createImage');
+
         $model = new GalleryForm;
 
         if (isset($_POST['GalleryForm'])) {
@@ -33,6 +37,8 @@ class GalleryController extends Controller
 
     public function actionDelete()
     {
+        $this->checkAccess('deleteImage');
+
         $name = isset($_GET['name']) ? $_GET['name'] : null;
         $path = null === $name ? null : $this->uploadsDir.DIRECTORY_SEPARATOR.$name;
 

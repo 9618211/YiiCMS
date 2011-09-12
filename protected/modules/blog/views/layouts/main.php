@@ -47,6 +47,10 @@
 
 	<div id="mainmenu">
         <?php
+        // Get current controller
+        $cc = Yii::app()->getController();
+        $cid = is_object($cc) ? $cc->getId() : null;
+
         $statusCond = 't.status='.PUBLIC_POST;
         if (!Yii::app()->user->isGuest) {
             $statusCond .= ' or (t.status='.PRIVATE_POST.' and t.create_user_id='.Yii::app()->user->id.')';
@@ -60,10 +64,10 @@
                 'url'=>array('/blog/page/view', 'id'=>$page->id),
             );
         }
-        $menu[] = array('label'=>Yii::t('menu', 'Logs'), 'url'=>array('/blog/sitelog'));
+        $menu[] = array('label'=>Yii::t('menu', 'Logs'), 'url'=>array('/blog/sitelog'), 'active'=>$cid=='sitelog');
         $menu[] = array('label'=>Yii::t('menu', 'Admin'), 'url'=>array('/admin'), 'visible'=>!Yii::app()->user->isGuest);
-        $menu[] = array('label'=>Yii::t('menu', 'Login'), 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest);
-        $menu[] = array('label'=>Yii::t('menu', 'Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest);
+        $menu[] = array('label'=>Yii::t('menu', 'Login'), 'url'=>array('/admin/login'), 'visible'=>Yii::app()->user->isGuest);
+        $menu[] = array('label'=>Yii::t('menu', 'Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/admin/login/logout'), 'visible'=>!Yii::app()->user->isGuest);
         $this->widget('zii.widgets.CMenu',array(
 			'items'=>$menu,
         ));

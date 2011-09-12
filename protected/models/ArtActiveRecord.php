@@ -16,4 +16,17 @@ abstract class ArtActiveRecord extends CActiveRecord
 
         return parent::beforeValidate();
     }
+
+    /**
+     * Check if the current model is in one of the given scenarios
+     * @param string $scenes the scenarios list, seperated by ","
+     **/
+    public function inScenarios($scenes)
+    {
+        $tmparr = array();
+        foreach (explode(',', $scenes) as $scene) {
+            $tmparr[] = trim($scene);
+        }
+        return in_array($this->getScenario(), $tmparr);
+    }
 }

@@ -12,6 +12,20 @@ class PostController extends Controller
 	public $layout='column2';
 
 	/**
+	 * Declares class-based actions.
+	 */
+	public function actions()
+	{
+		return array(
+			// captcha action renders the CAPTCHA image displayed on the contact page
+			'captcha'=>array(
+				'class'=>'CCaptchaAction',
+				'backColor'=>0xFFFFFF,
+			),
+		);
+	}
+
+	/**
 	 * @return array action filters
 	 */
 	public function filters()
@@ -30,7 +44,7 @@ class PostController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','feed'),
+				'actions'=>array('index','view','feed','captcha'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
@@ -61,6 +75,9 @@ class PostController extends Controller
 		));
 	}
 
+    /**
+     * RSS Feed
+     **/
     public function actionFeed()
     {
         if (isset($_GET['tag'])) {
