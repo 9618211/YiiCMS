@@ -1,0 +1,29 @@
+YiiCMS
+======
+
+Yet another CMS based on the Yii framework.
+
+This is acturally a homework of mine on studying this framework. So it is not recommanded to deploy in production environments.
+
+Install
+-------
+
+* Copy this program into a folder under your web root.
+* Modify $YIICMS\_PATH/protected/config/main.php and save your private settings.
+* Execute $YIICMS\_PATH/protected/data/schema.sql in your database.
+* Execute $YIIFRAMEWORK\_PATH/web/auth/schema-xxx.sql in your database.
+* Open http://YOUR\_URL\_TO\_YIICMS/install in your webbrowser.
+* Then login with the **admin** user, the default password is also **admin**.
+
+Author
+------
+
+Lenin Lee \<lenin.lee@gmail.com\>
+
+* http://sinolog.it
+* https://github.com/xbot/YiiCMS
+
+License
+-------
+
+The New BSD License.
