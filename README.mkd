@@ -20,7 +20,7 @@ Author
 
 Lenin Lee \<lenin.lee@gmail.com\>
 
-* http://sinolog.it
+* http://0x3f.org
 * https://github.com/xbot/YiiCMS
 
 License
