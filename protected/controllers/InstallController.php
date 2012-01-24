@@ -105,7 +105,7 @@ class InstallController extends Controller
         $am->assign('administrator', 1);
         $am->assign('user', 2);
 
-        echo 'OK';
+        echo 'Installation completed !';
 	}
 
 	/**

@@ -1,5 +1,6 @@
 $curYear = date('Y');
+$domain = Yii::app()->params['domain'];
 echo <<<HTML
-Copyright &copy; $curYear PaperJoys.COM. Technical support: Lenin.<br/>
+Copyright &copy; $curYear $domain.<br/>
 All Rights Reserved.<br/>
 HTML;
