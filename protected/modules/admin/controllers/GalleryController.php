@@ -98,9 +98,9 @@ class GalleryController extends Controller
     public function getUploadsUrl($fileName=null)
     {
         if (null === $fileName) {
-            return Yii::app()->createUrl('').'/'.basename($this->uploadsDir);
+            return Yii::app()->getBaseUrl().'/'.basename($this->uploadsDir);
         } else {
-            return Yii::app()->createUrl('').'/'.basename($this->uploadsDir).'/'.$fileName;
+            return Yii::app()->getBaseUrl().'/'.basename($this->uploadsDir).'/'.$fileName;
         }
     }
 }
