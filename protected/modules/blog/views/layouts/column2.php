@@ -10,7 +10,7 @@
             <?php $this->widget('RecentComments'); ?>
 
             <div class="feed" id="feed">
-                <a href="<?php echo Yii::app()->createUrl('blog/post/feed'); ?>"><img src="<?php echo Yii::app()->createUrl(''); ?>/images/feed.png"></a>
+                <a href="<?php echo Yii::app()->createUrl('blog/post/feed'); ?>"><img src="<?php echo Yii::app()->getBaseUrl(); ?>/images/feed.png"></a>
             </div>
 		</div><!-- sidebar -->
 	</div>

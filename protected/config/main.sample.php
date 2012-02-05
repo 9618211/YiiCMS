@@ -40,7 +40,12 @@ return array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
 		),
+        'authManager'=>array(
+            'class'=>'CDbAuthManager',
+            'connectionID'=>'db',
+        ),
 		// uncomment the following to enable URLs in path-format
+        /*
 		'urlManager'=>array(
 			'urlFormat'=>'path',
 			'rules'=>array(
@@ -53,6 +58,7 @@ return array(
 			),
             'showScriptName'=>false,
 		),
+         */
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=yiicms',
 			'emulatePrepare' => true,
@@ -89,6 +95,7 @@ return array(
 		'adminEmail'=>'webmaster@example.com',
         'editor'=>'tinymce',
         'uploads'=>'/webroot/yiicms/uploads',
+        'domain'=>'0X3F.ORG',
 	),
     'language'=>'zh_cn',
 );
