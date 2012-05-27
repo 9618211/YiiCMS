@@ -22,7 +22,7 @@
 <div id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::encode(Yii::app()->name); ?></div>
+		<div id="logo"><?php echo CHtml::link(CHtml::encode(Yii::app()->name), array('/blog')); ?></div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
@@ -40,7 +40,6 @@
                 array('label'=>Yii::t('menu', 'Tags'), 'url'=>array('/admin/tag'), 'active'=>$cid=='tag', 'visible'=>Yii::app()->user->checkAccess('createTag')),
                 array('label'=>Yii::t('menu', 'Gallery'), 'url'=>array('/admin/gallery'), 'active'=>$cid=='gallery', 'visible'=>Yii::app()->user->checkAccess('createImage')),
                 array('label'=>Yii::t('menu', 'Logs'), 'url'=>array('/admin/sitelog'), 'active'=>$cid=='sitelog', 'visible'=>(Yii::app()->user->name == 'admin')),
-                array('label'=>Yii::t('menu', 'Back to Site'), 'url'=>array('/blog')),
                 //array('label'=>Yii::t('menu', 'Login'), 'url'=>array('/admin/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>Yii::t('menu', 'Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/admin/login/logout'), 'visible'=>!Yii::app()->user->isGuest)
             ),

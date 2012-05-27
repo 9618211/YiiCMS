@@ -52,9 +52,6 @@ return array(
 				'<module:\w+>/<controller:\w+>/<id:\d+>'=>'<module>/<controller>/view',
 				'<module:\w+>/<controller:\w+>/<action:\w+>/<id:\d+>'=>'<module>/<controller>/<action>',
 				'<module:\w+>/<controller:\w+>/<action:\w+>'=>'<module>/<controller>/<action>',
-				'<controller:\w+>/<id:\d+>'=>'<controller>/view',
-				'<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
             'showScriptName'=>false,
 		),
@@ -93,7 +90,6 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
-        'editor'=>'tinymce',
         'uploads'=>'/webroot/yiicms/uploads',
         'domain'=>'0X3F.ORG',
 	),

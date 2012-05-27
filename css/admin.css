@@ -45,6 +45,7 @@ body
 	padding: 10px 20px;
 	font-size: 200%;
 }
+#logo a { text-decoration:none; }
 
 #mainmenu
 {
@@ -228,16 +229,6 @@ div.search-form
 	background: #80CFFF;
 }
 
-#Post_taglist
-{
-    width: 100%;
-}
-
-#Page_taglist
-{
-    width: 100%;
-}
-
 .post
 {
     margin-bottom: 20px;
@@ -363,11 +354,11 @@ div.search-form
 
 .login-table tbody tr:nth-child(even) td, tbody tr.even td {background:#ffffff;}
 .login-table tbody td {padding:0 !important;}
-.post-title {width: 100%;}
-.post-content {width: 100%;}
-.page-title {width: 100%;}
-.page-content {width: 100%;}
-.sitelog-content {width: 100%;}
+.post_title {}
+.post_content {width: 100%;}
+.page_title {}
+.page_content {width: 100%;}
+.sitelog_content {width: 100%;}
 .search {float: right;}
 table.logo {margin-bottom: 0;}
 #search-box {border: 1px solid #D1D8E8;padding: 2px;margin: 0px;}
@@ -416,3 +407,12 @@ div.form .option label,
 .grid-view {padding:0px !important;}
 .grid-view .pager {text-align: left !important;}
 .filters td {background-color: #FFF !important;}
+
+table .edit_form { border-left: 1px solid #E4F1FC;border-top: 1px solid #E4F1FC; }
+table .edit_form td { border-right: 1px solid #E4F1FC;border-bottom: 1px solid #E4F1FC; }
+td .cell_title { background-color:#E4F1FC;font-weight:bold;width:80px; }
+td .cell_content { background-color:#FFF !important; }
+td .cell_editor { padding:0; }
+td .col1 { width:300px; }
+#edit_table input,
+#edit_table textarea { margin:0; }

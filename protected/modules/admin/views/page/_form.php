@@ -27,71 +27,112 @@ $('#btn-preview').click(function(){
 
 	<?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'title'); ?>
-		<?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>256,'class'=>'page-title')); ?>
-		<?php echo $form->error($model,'title'); ?>
-	</div>
+    <table cellspacing=0 cellpadding=0 class="edit_form" id="edit_table">
+        <!--
+        <tr>
+            <th class="cell_title"></td>
+            <td class="cell_content col1"></td>
+            <th class="cell_title"></td>
+            <td class="cell_content col2"></td>
+        </tr>
+        <tr>
+            <th class="cell_title"></td>
+            <td class="cell_content" colspan=3></td>
+        </tr>
+        -->
+        <tr>
+            <th class="cell_title"><?php echo $form->labelEx($model,'title'); ?></td>
+            <td class="cell_content" colspan=3>
+                <?php echo $form->textField($model,'title',array('size'=>50,'maxlength'=>256,'class'=>'page_title')); ?>
+                <?php echo $form->error($model,'title'); ?>
+            </td>
+        </tr>
+        <tr>
+            <th class="cell_title"><?php echo $form->labelEx($model, 'taglist'); ?></td>
+            <td class="cell_content" colspan=3>
+                <?php echo $form->textField($model, 'taglist', array('size'=>50, 'maxlength'=>256)); ?>
+                <?php echo $form->error($model, 'taglist'); ?>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell_editor" colspan=4>
+                <?php
+                $this->widget('application.extensions.krichtexteditor.KRichTextEditor', array(
+                    'model' => $model,
+                    'value' => $model->isNewRecord ? '' : $model->content,
+                    'attribute' => 'content',
+                    'options' => array(
+                        'language'=>Yii::app()->settings->get('editor', 'language'),
+                        'width'=>'100%',
+                        'height'=>'450px',
+                        'theme'=>'advanced',
+                        'skin'=>'o2k7',
+                        'plugins'=>"autolink,lists,pagebreak,table,advhr,advimage,advlink,emotions,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,fullscreen,visualchars,nonbreaking,xhtmlxtras,advlist",
+                        'theme_advanced_buttons1'=>"bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
+                        'theme_advanced_buttons2'=>"cut,copy,paste,pastetext,pasteword,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,image,cleanup,help,code,|,insertdate,inserttime,preview,|,forecolor,backcolor",
+                        'theme_advanced_buttons3'=>"tablecontrols,|,hr,removeformat,visualaid,|,sub,sup,|,charmap,emotions,iespell,media,advhr,|,print,|,ltr,rtl,|,fullscreen",
+                        //'theme_advanced_buttons4'=>"insertlayer,moveforward,movebackward,absolute,|,styleprops,|,cite,abbr,acronym,del,ins,attribs,|,visualchars,nonbreaking,template,pagebreak",
+                        'theme_advanced_toolbar_location'=>'top',
+                        'theme_advanced_toolbar_align'=>'left',
+                        'theme_advanced_statusbar_location'=>'bottom',
+                        'theme_advanced_resizing'=>true,
+                        'theme_advanced_resize_horizontal'=>true,
+                    ),
+                ));
+                ?>
+                <?php echo $form->error($model,'content'); ?>
+            </td>
+        </tr>
+        <tr>
+            <th class="cell_title"><?php echo $form->labelEx($model,'status'); ?></td>
+            <td class="cell_content col1">
+                <span class="option">
+                <?php echo $form->radioButtonList($model, 'status', array(PUBLIC_POST=>Yii::t('post','Public'),PRIVATE_POST=>Yii::t('post','Private'),DRAFT_POST=>Yii::t('post','Draft')), array('separator'=>'&nbsp;')); ?>
+                <?php echo $form->error($model, 'status'); ?>
+                </span>
+            </td>
+            <th class="cell_title"><?php echo $form->labelEx($model,'enable_comment'); ?></td>
+            <td class="cell_content col2">
+                <span class="option">
+                <?php echo $form->checkBox($model, 'enable_comment'); ?>
+                <?php echo $form->error($model, 'enable_comment'); ?>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td class="cell_editor" colspan=4>
+                <div class="row buttons">
+                    <?php if($model->status == DRAFT_POST): ?>
+                    <span class="option">
+                    <?php echo CHtml::button(Yii::t('post', 'Post it'), array(
+                        'id'=>'btn-postit',
+                    )); ?>
+                    </span>
+                    <?php endif; ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'content'); ?>
-		<?php echo $form->textArea($model,'content',array('rows'=>20, 'cols'=>50,'class'=>'page-content')); ?>
-        <?php $this->widget('application.extensions.editor.editor', array(
-            'name'=>'Page_content',
-            'language'=>'zh_cn',
-        )); ?>
-		<?php echo $form->error($model,'content'); ?>
-	</div>
+                    <span class="option">
+                    <?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('post', 'Post it') : Yii::t('post', 'Save changes')); ?>
+                    </span>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'taglist'); ?>
-		<?php echo $form->textField($model,'taglist',array('size'=>60,'maxlength'=>256)); ?>
-		<?php echo $form->error($model,'taglist'); ?>
-	</div>
+                    <?php if($model->isNewRecord): ?>
+                    <span class="option">
+                    <?php echo CHtml::button(Yii::t('post', 'Save as draft'), array(
+                        'id'=>'btn-draft',
+                    )); ?>
+                    </span>
+                    <?php endif; ?>
 
-    <div class="row radio-group">
-		<?php echo $form->labelEx($model,'status'); ?>
-        <?php echo $form->radioButtonList($model, 'status', array(PUBLIC_POST=>Yii::t('post','Public'),PRIVATE_POST=>Yii::t('post','Private'),DRAFT_POST=>Yii::t('post','Draft')), array('separator'=>'&nbsp;')); ?>
-        <?php echo $form->error($model, 'status'); ?>
-    </div>
-
-    <div class="row">
-        <span class="option">
-		<?php echo $form->labelEx($model,'enable_comment'); ?>
-        <?php echo $form->checkBox($model, 'enable_comment'); ?>
-        <?php echo $form->error($model, 'enable_comment'); ?>
-        </span>
-    </div>
-
-	<div class="row buttons">
-        <?php if($model->status == DRAFT_POST): ?>
-        <span class="option">
-        <?php echo CHtml::button(Yii::t('post', 'Post it'), array(
-            'id'=>'btn-postit',
-        )); ?>
-        </span>
-        <?php endif; ?>
-
-        <span class="option">
-		<?php echo CHtml::submitButton($model->isNewRecord ? Yii::t('post', 'Post it') : Yii::t('post', 'Save changes')); ?>
-        </span>
-
-        <?php if($model->isNewRecord): ?>
-        <span class="option">
-        <?php echo CHtml::button(Yii::t('post', 'Save as draft'), array(
-            'id'=>'btn-draft',
-        )); ?>
-        </span>
-        <?php endif; ?>
-
-        <?php if(!$model->isNewRecord): ?>
-        <span class="option">
-        <?php echo CHtml::button(Yii::t('post', $model->status == DRAFT_POST ? 'Preview' : 'View Post'), array(
-            'id'=>'btn-preview',
-        )); ?>
-        </span>
-        <?php endif; ?>
-	</div>
+                    <?php if(!$model->isNewRecord): ?>
+                    <span class="option">
+                    <?php echo CHtml::button(Yii::t('post', $model->status == DRAFT_POST ? 'Preview' : 'View Post'), array(
+                        'id'=>'btn-preview',
+                    )); ?>
+                    </span>
+                    <?php endif; ?>
+                </div>
+            </td>
+        </tr>
+    </table>
 
 <?php $this->endWidget(); ?>
 

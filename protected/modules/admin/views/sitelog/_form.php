@@ -9,7 +9,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'content'); ?>
-		<?php echo $form->textArea($model,'content',array('rows'=>20, 'cols'=>50, 'class'=>'sitelog-content')); ?>
+		<?php echo $form->textArea($model,'content',array('rows'=>20, 'cols'=>50, 'class'=>'sitelog_content')); ?>
 		<?php echo $form->error($model,'content'); ?>
         <script type="text/javascript" src="<?php echo Yii::app()->createUrl(''); ?>/js/nicEdit.js"></script>
         <script type="text/javascript">
