@@ -62,6 +62,7 @@ $('#btn-preview').click(function(){
                     'value' => $model->isNewRecord ? '' : $model->content,
                     'attribute' => 'content',
                     'options' => array(
+                        'init_instance_callback'=>'hook_editor_callback',
                         'language'=>Yii::app()->settings->get('editor', 'language'),
                         'width'=>'100%',
                         'height'=>'450px',
@@ -76,7 +77,7 @@ $('#btn-preview').click(function(){
                         'theme_advanced_toolbar_align'=>'left',
                         'theme_advanced_statusbar_location'=>'bottom',
                         'theme_advanced_resizing'=>true,
-                        'theme_advanced_resize_horizontal'=>true,
+                        'theme_advanced_resize_horizontal'=>false,
                     ),
                 ));
                 ?>

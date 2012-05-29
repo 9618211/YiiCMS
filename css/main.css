@@ -234,38 +234,38 @@ div.search-form
     width: 100%;
 }
 
-.post
+.post_item
 {
     margin-bottom: 20px;
     padding-left: 10px;
     padding-right: 10px;
 }
 
-.post .title
+.post_item .title
 {
     font-size: 1.5em;
     color: #555;
 	border-bottom: 1px solid #C9E0ED;
 }
 
-.post .title a
+.post_item .title a
 {
     color: #555;
     text-decoration: none;
 }
 
-.post .author
+.post_item .author
 {
     color: #888;
     margin: 0 0 5px;
 }
 
-.post .content
+.post_item .content
 {
     margin-top: 10px;
 }
 
-.post .nav
+.post_item .nav
 {
     -moz-border-radius: 7px;
     padding: 5px;
@@ -301,12 +301,12 @@ div.search-form
     margin-bottom: 10px;
 }
 
-.single-post-content
+.page_item_content
 {
     margin-top: 15px;
 }
 
-.single-post-info
+.page_item_info
 {
     -moz-border-radius: 7px;
     padding: 5px;

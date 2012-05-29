@@ -1,3 +1,13 @@
+<?php
+// Get current controller
+$cc = Yii::app()->getController();
+$cid = is_object($cc) ? $cc->getId() : null;
+
+Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl.'/js/ui.js', CClientScript::POS_HEAD);
+Yii::app()->clientScript->registerScript('on_ready', "
+    resize_callback();
+", CClientScript::POS_READY);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -17,19 +27,16 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
-<body>
+<body <?php echo $cid===null ? '':'class="'.$cid.'"'; ?>>
 
 <div id="page">
 
 	<div id="header">
-		<div id="logo"><?php echo CHtml::link(CHtml::encode(Yii::app()->name), array('/blog')); ?></div>
+		<div id="logo"><?php echo $cid=='login' ? '':CHtml::link(CHtml::encode(Yii::app()->name), array('/blog')); ?></div>
 	</div><!-- header -->
 
 	<div id="mainmenu">
         <?php
-        // Get current controller
-        $cc = Yii::app()->getController();
-        $cid = is_object($cc) ? $cc->getId() : null;
         $this->widget('zii.widgets.CMenu',array(
             'items'=>array(
                 array('label'=>Yii::t('menu', 'Control Panel'), 'url'=>array('/admin'), 'active'=>$cid=='default', 'visible'=>!Yii::app()->user->isGuest),

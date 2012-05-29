@@ -1,4 +1,4 @@
-<div class="post">
+<div class="post_item">
 
     <div class="title"><?php echo CHtml::link(CHtml::encode($data->title), array('post/view', 'id'=>$data->id)); ?></div>
 

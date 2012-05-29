@@ -2,11 +2,11 @@
 $this->pageTitle = Yii::app()->name.' - '.CHtml::encode($model->title);
 ?>
 
-<div class="single-post-content">
+<div class="page_item_content">
     <?php echo $model->content; ?>
 </div>
 
-<div class="single-post-info">
+<div class="page_item_info">
 <?php echo Yii::t('post', 'Posted by'); ?> <?php echo CHtml::encode($model->author->nickname); ?>, <?php echo $model->create_time; ?>
 <br>
 <?php echo Yii::t('post', 'Tags'); ?>: <?php echo $model->taglist; ?> | <?php echo Yii::t('post', 'Last updated'); ?>: <?php echo $model->update_time; ?>
