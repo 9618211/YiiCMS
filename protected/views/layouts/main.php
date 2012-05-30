@@ -28,7 +28,7 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>Yii::t('menu', 'Home'), 'url'=>array('/admin/index')),
+				array('label'=>Yii::t('menu', 'Home'), 'url'=>array('/admin')),
 				array('label'=>Yii::t('menu', 'Login'), 'url'=>array('/admin/login'), 'visible'=>Yii::app()->user->isGuest),
 			),
 		)); ?>
