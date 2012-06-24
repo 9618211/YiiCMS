@@ -16,4 +16,5 @@ return array(
     'Logs'=>'站点日志',
     'Operations'=>'操作',
     'Recent Comments'=>'最新评论',
+    'Settings'=>'设置',
 );

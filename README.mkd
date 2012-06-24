@@ -15,10 +15,15 @@ Install
 * Open http://YOUR\_URL\_TO\_YIICMS/install in your webbrowser.
 * Then login with the **admin** user, the default password is also **admin**.
 
+Upgrade
+-------
+
+* To upgrade TinyMCE, notice that language files under "langs" folders (both under the folder TinyMCE and each theme) should be renamed to the locale format, e.x. rename cn.js to zh_cn.js, rename en.js to en_us.js, so are keys in these files.
+
 Author
 ------
 
-Lenin Lee \<lenin.lee@gmail.com\>
+Lenin Lee \<lenin.lee at gmail dot com\>
 
 * http://0x3f.org
 * https://github.com/xbot/YiiCMS

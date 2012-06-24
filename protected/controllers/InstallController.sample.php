@@ -106,7 +106,8 @@ class InstallController extends Controller
         $am->assign('user', 2);
 
         # Set default settings
-        Yii::app()->settings->set('editor', 'language', 'cn');
+        Yii::app()->settings->set('common', 'site_name', 'YiiCMS');
+        Yii::app()->settings->set('common', 'language', 'cn');
 
         echo 'Installation completed !';
 	}

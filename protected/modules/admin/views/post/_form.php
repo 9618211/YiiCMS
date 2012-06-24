@@ -63,7 +63,7 @@ $('#btn-preview').click(function(){
                     'attribute' => 'content',
                     'options' => array(
                         'init_instance_callback'=>'hook_editor_callback',
-                        'language'=>Yii::app()->settings->get('editor', 'language'),
+                        'language'=>Yii::app()->settings->get('common', 'language'),
                         'width'=>'100%',
                         'height'=>'450px',
                         'theme'=>'advanced',

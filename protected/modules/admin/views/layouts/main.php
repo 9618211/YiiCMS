@@ -32,13 +32,16 @@ Yii::app()->clientScript->registerScript('on_ready', "
 <div id="page">
 
 	<div id="header">
+        <!--
 		<div id="logo"><?php echo $cid=='login' ? '':CHtml::link(CHtml::encode(Yii::app()->name), array('/blog')); ?></div>
+        -->
 	</div><!-- header -->
 
 	<div id="mainmenu">
         <?php
         $this->widget('zii.widgets.CMenu',array(
             'items'=>array(
+                array('label'=>Yii::app()->name, 'url'=>array('/blog'), 'active'=>false),
                 array('label'=>Yii::t('menu', 'Control Panel'), 'url'=>array('/admin'), 'active'=>$cid=='default', 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>Yii::t('menu', 'Users'), 'url'=>array('/admin/user'), 'active'=>$cid=='user', 'visible'=>Yii::app()->user->checkAccess('createUser')),
                 array('label'=>Yii::t('menu', 'Posts'), 'url'=>array('/admin/post'), 'active'=>$cid=='post', 'visible'=>Yii::app()->user->checkAccess('createPost')),
@@ -47,6 +50,7 @@ Yii::app()->clientScript->registerScript('on_ready', "
                 array('label'=>Yii::t('menu', 'Tags'), 'url'=>array('/admin/tag'), 'active'=>$cid=='tag', 'visible'=>Yii::app()->user->checkAccess('createTag')),
                 array('label'=>Yii::t('menu', 'Gallery'), 'url'=>array('/admin/gallery'), 'active'=>$cid=='gallery', 'visible'=>Yii::app()->user->checkAccess('createImage')),
                 array('label'=>Yii::t('menu', 'Logs'), 'url'=>array('/admin/sitelog'), 'active'=>$cid=='sitelog', 'visible'=>(Yii::app()->user->name == 'admin')),
+                array('label'=>Yii::t('menu', 'Settings'), 'url'=>array('/admin/settings'), 'active'=>$cid=='settings', 'visible'=>(Yii::app()->user->name == 'admin')),
                 //array('label'=>Yii::t('menu', 'Login'), 'url'=>array('/admin/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>Yii::t('menu', 'Logout').' ('.Yii::app()->user->name.')', 'url'=>array('/admin/login/logout'), 'visible'=>!Yii::app()->user->isGuest)
             ),

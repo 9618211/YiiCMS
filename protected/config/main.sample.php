@@ -7,7 +7,6 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'YiiCMS',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -83,6 +82,19 @@ return array(
 				*/
 			),
 		),
+        'cache'=>array(
+            'class'=>'system.caching.CFileCache',
+        ),
+        'settings'=>array(
+            'class'                 => 'CmsSettings',
+            'cacheComponentId'  => 'cache',
+            'cacheId'           => 'global_website_settings',
+            'cacheTime'         => 84000,
+            'tableName'     => '{{settings}}',
+            'dbComponentId'     => 'db',
+            'createTable'       => true,
+            'dbEngine'      => 'InnoDB',
+        ),
 	),
 
 	// application-level parameters that can be accessed
@@ -93,5 +105,9 @@ return array(
         'uploads'=>'/webroot/yiicms/uploads',
         'domain'=>'0X3F.ORG',
 	),
-    'language'=>'zh_cn',
+
+    // application behaviors
+    'behaviors'=>array(
+        'ApplicationConfigBehavior',
+    ),
 );
